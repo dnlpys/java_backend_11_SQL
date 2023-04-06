@@ -1,0 +1,31 @@
+***윈도우 키보드 + e : 탐색기 열기
+***경로창에 cmd입력 + 엔터
+
+Microsoft Windows [Version 10.0.22621.1265]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\MULTI_EDU\oracleWork>sqlplus system
+
+SQL*Plus: Release 11.2.0.2.0 Production on 수 4월 5 10:40:58 2023
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter password: hi123456
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL>
+===========================================================
+
+SQL> CREATE USER TEST IDENTIFIED BY hi123456 ;
+
+User created.
+
+SQL> GRANT CONNECT,RESOURCE TO TEST ;
+
+Grant succeeded.
+
+SQL> GRANT CREATE VIEW TO TEST ;
+
+Grant succeeded.
