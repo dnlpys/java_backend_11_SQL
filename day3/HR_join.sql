@@ -88,3 +88,78 @@ case d.department_name
 end 부서명 
 FROM employees e inner join departments d
 on (e.department_id=d.department_id) ;
+
+
+-------------------------------
+--30번부서 사원들의 급여목록에 급여등급테이블을 조인해서 등급을 부 
+--여하려 합니다.
+--각 사원의 급여가 등급별 최소급여이상 최대급여이하 범위에 따라 
+--등급이 정해집니다.
+select e.employee_id,e.salary,
+e.department_id,s.max_sal,s.grade
+from employees e join  sal_grade s
+on e.salary between s.min_sal and s.max_sal
+where department_id = 100;
+
+-- self join
+select e1.employee_id,e1.first_name,e2.first_name
+from employees e1,employees e2
+where e1.manager_id = e2.employee_id
+order by e1.employee_id;
+
+select e1.employee_id,e1.first_name,e2.first_name
+from employees e1 join employees e2
+on e1.manager_id = e2.employee_id
+order by e1.employee_id;
+
+--outer join
+select e1.employee_id,e1.first_name,e2.first_name
+from employees e1,employees e2
+where e1.manager_id = e2.employee_id(+)
+order by e1.employee_id;
+
+select e1.employee_id,e1.first_name,e2.first_name
+from employees e1 left join employees e2
+on e1.manager_id = e2.employee_id
+order by e1.employee_id;
+
+--조인 후 사원이 없는 부서명도 같이 출력되도록 할것
+select e.employee_id,e.first_name,d.department_name
+from employees e , departments d
+where e.department_id(+) = d.department_id;
+
+select e.employee_id,e.first_name,d.department_name
+from employees e right join departments d
+on e.department_id = d.department_id;
+
+--조인후 부서배정이안된사원도 출력할것.
+select e.employee_id,e.first_name,d.department_name
+from employees e left join departments d
+on e.department_id = d.department_id;
+
+--using
+select e.employee_id,e.first_name,d.department_name
+from employees e left join departments d
+using(department_id);
+
+--full outer join
+select e.employee_id,e.first_name,d.department_name
+from employees e full join departments d
+using(department_id);
+
+select 
+nvl(e.employee_id,0) 사번,
+nvl(e.first_name,'사원없음') 이름,
+nvl(d.department_name,'부서없음') 부서명
+from employees e full join departments d
+using(department_id);
+
+--natural join
+select employee_id,department_name
+from employees natural join departments;
+
+
+--1.사원 테이블과 부서 테이블을 조인하여 모든 사원ID,사원이름,급여,부서명을 
+--출력하라. (부서명 내림차순 정렬)
+
+
