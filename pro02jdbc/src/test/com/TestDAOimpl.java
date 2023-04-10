@@ -89,6 +89,7 @@ public class TestDAOimpl implements TestDAO {
 		System.out.println("selectOne()...");
 		System.out.println(vo);
 
+		TestVO vo2 = new TestVO();
 		try {
 			conn = DriverManager.getConnection(
 					url, 
@@ -96,13 +97,38 @@ public class TestDAOimpl implements TestDAO {
 					password);
 			System.out.println("conn successed...");
 
-			pstmt = conn.prepareStatement("select * from test where num=3");
+			pstmt = conn.prepareStatement(
+					"select * from test where num=?");
+			pstmt.setInt(1, vo.getNum());
 
 			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+//				System.out.print(rs.getInt("num"));
+//				System.out.print(rs.getString("name"));
+//				System.out.println(rs.getInt("age"));
+				vo2.setNum(rs.getInt("num"));
+				vo2.setName(rs.getString("name"));
+				vo2.setAge(rs.getInt("age"));
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 			if (conn != null) {
 				try {
 					conn.close();
@@ -112,11 +138,6 @@ public class TestDAOimpl implements TestDAO {
 			}
 		}
 
-		TestVO vo2 = new TestVO();
-		vo2.setNum(3);
-		vo2.setName("kim3");
-		vo2.setAge(11);
-		System.out.println(vo2);
 
 		return vo2;
 	}
