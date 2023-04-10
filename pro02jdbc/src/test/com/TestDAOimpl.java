@@ -33,6 +33,7 @@ public class TestDAOimpl implements TestDAO {
 	public List<TestVO> selectAll() {
 		System.out.println("selectAll()...");
 
+		List<TestVO> vos = new ArrayList<>();
 		try {
 			conn = DriverManager.getConnection(
 					url, 
@@ -45,14 +46,33 @@ public class TestDAOimpl implements TestDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				System.out.print(rs.getInt("num"));
-				System.out.print(rs.getString("name"));
-				System.out.println(rs.getInt("age"));
+//				System.out.print(rs.getInt("num"));
+//				System.out.print(rs.getString("name"));
+//				System.out.println(rs.getInt("age"));
+				TestVO vo = new TestVO();
+				vo.setNum(rs.getInt("num"));
+				vo.setName(rs.getString("name"));
+				vo.setAge(rs.getInt("age"));
+				vos.add(vo);
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 			if (conn != null) {
 				try {
 					conn.close();
@@ -61,26 +81,6 @@ public class TestDAOimpl implements TestDAO {
 				}
 			}
 		}
-
-		List<TestVO> vos = new ArrayList<>();
-		TestVO vo = new TestVO();
-		vo.setNum(1);
-		vo.setName("kim1");
-		vo.setAge(11);
-		vos.add(vo);
-
-		vo = new TestVO();
-		vo.setNum(2);
-		vo.setName("kim1");
-		vo.setAge(11);
-		vos.add(vo);
-
-		vo = new TestVO();
-		vo.setNum(3);
-		vo.setName("kim3");
-		vo.setAge(11);
-		vos.add(vo);
-
 		return vos;
 	}
 
