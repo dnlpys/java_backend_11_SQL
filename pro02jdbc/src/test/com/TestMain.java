@@ -18,6 +18,9 @@ public class TestMain {
 		TestDAO dao = new TestDAOimpl();
 		List<TestVO> vos = dao.selectAll();
 		System.out.println(vos);
+		System.out.println(vos.size());
+		
+		System.out.println("======================");
 		
 		TestVO vo = new TestVO();
 		vo.setNum(5);
