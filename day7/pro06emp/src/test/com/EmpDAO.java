@@ -16,4 +16,8 @@ public interface EmpDAO {
 
 	public int delete(EmpVO vo);
 
+	public List<ViewEmpDeptVO> selectView();
+
+	
+
 }

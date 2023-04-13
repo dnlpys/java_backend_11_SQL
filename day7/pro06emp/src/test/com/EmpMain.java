@@ -92,7 +92,16 @@ public class EmpMain {
 			System.out.print(x.getHire_date() + "\t");
 			System.out.println(x.getJob_id());
 		}
-
+		
+		List<ViewEmpDeptVO> vos_view = dao.selectView();//comm : null >> 0으로 표기할것
+		for (ViewEmpDeptVO x : vos_view) {
+			System.out.print(x.getEmpno() + "\t");
+			System.out.print(x.getFname() + "\t");
+			System.out.print(x.getDeptno() + "\t");
+			System.out.print(x.getDname() + "\t");
+			System.out.print(x.getSal() + "\t");
+			System.out.println(x.getComm());
+		}
 	}// end main
 
 }// end class

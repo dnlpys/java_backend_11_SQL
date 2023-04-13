@@ -340,4 +340,57 @@ public class EmpDAOimpl implements EmpDAO {
 		return flag;
 	}
 
+	@Override
+	public List<ViewEmpDeptVO> selectView() {
+		System.out.println("selectView()...");
+		List<ViewEmpDeptVO> vos = new ArrayList<>();
+
+		try {
+			conn = DriverManager.getConnection(url, user, password);
+			System.out.println("conn successed...");
+
+			pstmt = conn.prepareStatement("select * from view_emp_dept order by empno desc");
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ViewEmpDeptVO vo = new ViewEmpDeptVO();
+				vo.setEmpno(rs.getInt("empno"));
+				vo.setFname(rs.getString("fname"));
+				vo.setDeptno(rs.getInt("deptno"));
+				vo.setDname(rs.getString("dname"));
+				vo.setSal(rs.getInt("sal"));
+				vo.setComm(rs.getDouble("comm"));
+				vos.add(vo);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		} // end finally
+
+		return vos;
+	}
+
 }
